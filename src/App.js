@@ -12,11 +12,11 @@ function App() {
         setData(response.data);
       })
       .catch(function (error) {
-        // handle error
+        // where i will handle error
         console.log(error);
       })
       .finally(function () {
-        // always executed
+        // this code is always executed
       });
   }, []); 
 

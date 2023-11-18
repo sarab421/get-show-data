@@ -1,24 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
-
+import axios from "axios";
+import { useState, useEffect } from "react";
+import Component from "./Components";
+import EnterData from "./EnterData";
 function App() {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    axios
+      .get("https://jsonplaceholder.typicode.com/posts")
+      .then(function (response) {
+        setData(response.data);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+      .finally(function () {
+        // always executed
+      });
+  }, []); 
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div>
+        {data?.slice(0, 1).map((item, index) => {
+          return (
+            <Component
+              key={index} 
+              title={item.title}
+              id={item.id}
+              body={item.body}
+            ></Component>
+          );
+        })}
+      </div>
+
+      <h1>Now Enter Data</h1>
+      <EnterData />
+    </>
   );
 }
 
